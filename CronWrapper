@@ -1,12 +1,20 @@
-#!/bin/ksh
-# $Id: //nyse_depot/projects/ems/contrib/utils/CronWrapper#2 $
-# $Revision: #2 $ $DateTime: 2012/12/27 09:12:50 $ $Author: pkay $
+#!/bin/bash
+# CronWrapper - sources ~/bin/SetUp
+#               runs command, write log files (stdout and stderr) to ~/log directory
+#               cron errors can be found in the account's mailbox
 
-cd
-. /etc/profile.d/oml.sh
+. ~/bin/SetUp
 
-DATE=`date +%Y%m%d`
-CRONNAME=`basename $1`       # remove directory
-LOGFILE=$EMSTOOLSLOGS/CronWrapper.$CRONNAME.$DATE.$$.log
+DATE=$(date +%Y%m%d.%H%M)
+CRONNAME=${1##*/}       # remove directory name
+LOGFILE=~/log/CronWrapper.$CRONNAME.$DATE.$$.log
 
-exec "$@" > $LOGFILE
+if (( $# > 0));then
+    exec "$@" > $LOGFILE 2> ${LOGFILE}.stderr
+else
+    # remove empty stderr files (older than 1 day)
+    find ~/log/. -name 'CronWrapper.*.stderr' -size 0 -mtime +0 -exec rm {} \;
+
+    # remove files (older than 1 month)
+    find ~/log/. -name 'CronWrapper.*' -mtime +31 -exec rm {} \;
+fi
