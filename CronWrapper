@@ -1,7 +1,18 @@
 #!/bin/bash
 # CronWrapper - sources ~/bin/SetUp
-#               runs command, write log files (stdout and stderr) to ~/log directory
+#               runs command, writes log files (stdout and stderr) to ~/log directory
 #               cron errors can be found in the account's mailbox
+#
+# Usage:  (in cron table)
+#         (1)  /home/oss/bin/CronWrapper command arg1 arg2 arg3 etc ...
+#              runs "command" with the specified arguments
+#              stdout from "command" goes to file logs/CronWrapper.command.<timestamp>.PID.stdout
+#              stderr from "command" goes to file logs/CronWrapper.command.<timestamp>.PID.stderr
+#              Any error messages from cron (eg if the command doesn't exist) go to the account's mailbox.
+#         (2)  /home/oss/bin/CronWrapper
+#              When run with no parameters, CronWrapper performs housekeeping on the logs directory
+#              Empty stderr files older than 1 week are removed.
+#              All log files older than one month are removed.
 
 . ~/bin/SetUp
 
