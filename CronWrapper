@@ -1,10 +1,12 @@
 #!/bin/ksh
+# $Id: //nyse_depot/projects/ems/contrib/utils/CronWrapper#2 $
+# $Revision: #2 $ $DateTime: 2012/12/27 09:12:50 $ $Author: pkay $
 
 cd
-. .profile
+. /etc/profile.d/oml.sh
 
-DATE=$(date +%Y%m%d)
-CRONNAME=${1##*/}	# remove directory
-LOGFILE=$TOOLSLOGS/CronWrapper.$CRONNAME.$DATE.$$
+DATE=`date +%Y%m%d`
+CRONNAME=`basename $1`       # remove directory
+LOGFILE=$EMSTOOLSLOGS/CronWrapper.$CRONNAME.$DATE.$$.log
 
 exec "$@" > $LOGFILE
