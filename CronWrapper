@@ -6,8 +6,8 @@
 # Usage:  (in cron table)
 #         (1)  /home/oss/bin/CronWrapper command arg1 arg2 arg3 etc ...
 #              runs "command" with the specified arguments
-#              stdout from "command" goes to file logs/CronWrapper.command.<timestamp>.PID.stdout
-#              stderr from "command" goes to file logs/CronWrapper.command.<timestamp>.PID.stderr
+#              stdout from "command" goes to file logs/CronWrapper.command.<timestamp>.PID.log
+#              stderr from "command" goes to file logs/CronWrapper.command.<timestamp>.PID.log.stderr
 #              Any error messages from cron (eg if the command doesn't exist) go to the account's mailbox.
 #         (2)  /home/oss/bin/CronWrapper
 #              When run with no parameters, CronWrapper performs housekeeping on the logs directory
