@@ -1,0 +1,10 @@
+#!/bin/ksh
+
+cd
+. .profile
+
+DATE=$(date +%Y%m%d)
+CRONNAME=${1##*/}	# remove directory
+LOGFILE=$TOOLSLOGS/CronWrapper.$CRONNAME.$DATE.$$
+
+exec "$@" > $LOGFILE
